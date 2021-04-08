@@ -57,7 +57,7 @@ function getUserSurName(event) {
 }
 
 function getUserLogin(event) {
-    userLoginVal = '@' + event.target.value;
+    userLoginVal = event.target.value;
 }
 
 function getUserCity(event) {
