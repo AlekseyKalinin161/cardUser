@@ -1,6 +1,6 @@
-document.addEventListener('DOMContentLoaded', registrationForm)
+document.addEventListener('DOMContentLoaded', addRegistrationForm.bind(null, submitHandler))
 
-function registrationForm() {
+function addRegistrationForm(handler) {
     let div = document.createElement('div');
     div.classList.add('card');
     div.setAttribute('style', "width: 500px");
@@ -10,9 +10,29 @@ function registrationForm() {
     div.appendChild(divCardBody);
     divCardBody.classList.add('card-body');
 
-    divCardBody.insertAdjacentHTML("afterbegin", `<h5 class="card-title">
-        Название карточки</h5>`);
-    divCardBody.insertAdjacentHTML("beforeend", `<h6 class="card-subtitle mb-2 text-muted" >
-        Подзаголовок карты</h6>`);
+    const form = document.createElement('form')
+    form.addEventListener('submit', handler)
+    divCardBody.appendChild(form);
+
+    form.insertAdjacentHTML("afterbegin", `
+<label class="form-label">Login</label>
+<input name="login" class="form-control mb-3">
+<label class="form-label">Password</label>
+<input type="password" name="password" class="form-control mb-3">
+<button type="submit" class="btn btn-primary mb-3">Submit</button>`);
+
 }
 
+function submitHandler(event) {
+    event.preventDefault();
+    const names = ['login', 'password'];
+    for (const input of event.target) {
+        if (!names.includes(input.name)) return;
+        const user = {
+            [input.name]: input.value
+        }
+        console.log(user);
+    }
+}
+
+// const formData = new FormData(document.querySelector('form'))
